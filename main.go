@@ -32,5 +32,10 @@ func main() {
 		lib.CreateReservation(username, password, hostname, me, roomID, dateparse.MustParse(os.Args[1]))
 	}
 
+	if len(os.Args) == 3 {
+		room := lib.GetRoom(username, password, hostname, os.Args[2])
+		lib.CreateReservation(username, password, hostname, me, room.ID, dateparse.MustParse(os.Args[1]))
+	}
+
 	lib.ListReservations(username, password, hostname)
 }

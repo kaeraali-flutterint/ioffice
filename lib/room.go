@@ -9,8 +9,8 @@ import (
 	"net/http"
 )
 
-func GetRoom(username string, password string, hostname string, ID string) schema.Room {
-	url := fmt.Sprintf("https://%v.iofficeconnect.com/external/api/rest/v2/rooms/%v", hostname, ID)
+func GetRoom(username string, password string, hostname string, search string) schema.Room {
+	url := fmt.Sprintf("https://%v.iofficeconnect.com/external/api/rest/v2/rooms/?room=%v", hostname, search)
 	req, err := http.NewRequest("GET", url, nil)
 	req.Header.Add("x-auth-username", username)
 	req.Header.Add("x-auth-password", password)
@@ -25,8 +25,13 @@ func GetRoom(username string, password string, hostname string, ID string) schem
 	if err != nil {
 		log.Println("Error while reading the response bytes:", err)
 	}
+	rooms := make([]schema.Room, 0)
+	json.Unmarshal([]byte(body), &rooms)
 
-	room := schema.Room{}
-	json.Unmarshal([]byte(body), &room)
-	return room
+	fmt.Println(rooms)
+	if len(rooms) == 0 {
+		log.Fatalf("Couldn't find any rooms for search %v", search)
+	}
+
+	return rooms[0]
 }
