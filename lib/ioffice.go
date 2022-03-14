@@ -13,14 +13,20 @@ type IOffice struct {
 	username   string
 	password   string
 	httpClient *http.Client
+	lastStatus int
 }
 
 func NewIOffice(hostname string, username string, password string) *IOffice {
 	return &IOffice{
-		hostname: hostname,
-		username: username,
-		password: password,
+		hostname:   hostname,
+		username:   username,
+		password:   password,
+		lastStatus: 0,
 	}
+}
+
+func (i *IOffice) WasOkay() bool {
+	return (i.lastStatus > 199 && i.lastStatus < 300)
 }
 
 func (i *IOffice) Request(method string, endpoint string, body io.Reader) []byte {
@@ -38,6 +44,7 @@ func (i *IOffice) Request(method string, endpoint string, body io.Reader) []byte
 	}
 	defer resp.Body.Close()
 
+	i.lastStatus = resp.StatusCode
 	if resp.StatusCode < 200 || resp.StatusCode > 299 {
 		fmt.Println("Error status detected: ", resp.StatusCode)
 	}
