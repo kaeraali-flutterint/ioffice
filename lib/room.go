@@ -10,7 +10,10 @@ import (
 func (i *IOffice) GetRoom(ID string) schema.Room {
 	endpoint := fmt.Sprintf("v2/rooms/%v", ID)
 	body := i.Request("GET", endpoint, nil)
-	room := schema.Room{}
-	json.Unmarshal([]byte(body), &room)
-	return room
+	rooms := make([]schema.Room, 0)
+	json.Unmarshal([]byte(body), &rooms)
+  if len(rooms) == 0 {
+		log.Fatalf("Couldn't find any rooms for search %v", search)
+	}
+	return rooms[0]
 }

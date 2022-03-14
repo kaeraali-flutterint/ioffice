@@ -35,5 +35,10 @@ func main() {
 		ioffice.CreateReservation(me, roomID, dateparse.MustParse(os.Args[1]))
 	}
 
+	if len(os.Args) == 3 {
+		room := ioffice.GetRoom(os.Args[2])
+		ioffice.CreateReservation(me, room.ID, dateparse.MustParse(os.Args[1]))
+	}
+
 	ioffice.ListReservations()
 }
