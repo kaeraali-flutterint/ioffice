@@ -33,7 +33,7 @@ func main() {
 
 	me := ioffice.GetMe()
 	if !ioffice.WasOkay() {
-		log.Println("Stopping now as auth failed.  Are you on SSO?  If so username/password won't work.")
+		log.Println("Stopping now as auth failed.  Are you on SSO?  See README.md on how to authenticate.")
 		return
 	}
 
