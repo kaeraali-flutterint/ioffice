@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"os"
 
 	"github.com/alicekaerast/ioffice/lib"
@@ -30,6 +31,10 @@ func main() {
 	ioffice := lib.NewIOffice(hostname, username, password)
 
 	me := ioffice.GetMe()
+	if !ioffice.WasOkay() {
+		log.Println("Stopping now as auth failed.  Are you on SSO?  If so username/password won't work.")
+		return
+	}
 
 	if len(os.Args) == 2 {
 		ioffice.CreateReservation(me, roomID, dateparse.MustParse(os.Args[1]))
