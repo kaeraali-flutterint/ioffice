@@ -2,10 +2,11 @@ package main
 
 import (
 	"fmt"
+	"os"
+
 	"github.com/alicekaerast/ioffice/lib"
 	"github.com/araddon/dateparse"
 	"github.com/spf13/viper"
-	"os"
 )
 
 func main() {
@@ -26,11 +27,13 @@ func main() {
 	roomID := viper.GetInt("roomID")
 	hostname := viper.GetString("hostname")
 
-	me := lib.GetMe(username, password, hostname)
+	ioffice := lib.NewIOffice(hostname, username, password)
+
+	me := ioffice.GetMe()
 
 	if len(os.Args) == 2 {
-		lib.CreateReservation(username, password, hostname, me, roomID, dateparse.MustParse(os.Args[1]))
+		ioffice.CreateReservation(me, roomID, dateparse.MustParse(os.Args[1]))
 	}
 
-	lib.ListReservations(username, password, hostname)
+	ioffice.ListReservations()
 }

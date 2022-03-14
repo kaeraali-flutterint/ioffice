@@ -4,32 +4,17 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"log"
+	"time"
+
 	"github.com/alicekaerast/ioffice/schema"
 	"github.com/fatih/color"
 	"github.com/rodaine/table"
-	"io/ioutil"
-	"log"
-	"net/http"
-	"time"
 )
 
-func ListReservations(username string, password string, hostname string) {
-	url := fmt.Sprintf("https://%v.iofficeconnect.com/external/api/rest/v2/reservations/?showOnlyMyReservations=true", hostname)
-	req, err := http.NewRequest("GET", url, nil)
-	req.Header.Add("x-auth-username", username)
-	req.Header.Add("x-auth-password", password)
-	client := &http.Client{}
-	resp, err := client.Do(req)
-	if err != nil {
-		log.Println("Error on response.\n[ERROR] -", err)
-	}
-	defer resp.Body.Close()
-
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		log.Println("Error while reading the response bytes:", err)
-	}
-
+func (i *IOffice) ListReservations() {
+	endpoint := "v2/reservations/?showOnlyMyReservations=true"
+	body := i.Request("GET", endpoint, nil)
 	reservations := schema.Reservations{}
 	json.Unmarshal([]byte(body), &reservations)
 	log.Printf("Upcoming reservations: %v", len(reservations))
@@ -46,8 +31,8 @@ func ListReservations(username string, password string, hostname string) {
 	tbl.Print()
 }
 
-func CreateReservation(username string, password string, hostname string, user schema.User, roomID int, date time.Time) {
-	url := fmt.Sprintf("https://%v.iofficeconnect.com/external/api/rest/v2/reservations", hostname)
+func (i *IOffice) CreateReservation(user schema.User, roomID int, date time.Time) {
+	endpoint := "v2/reservations"
 
 	// {"guests":[],"notes":"","user":{"id":2409},"center":{"id":74},"room":{"id":672},"numberOfPeople":1,"startDate":1647011700000,"endDate":1647015300000,"allDay":false}
 	reservationRequest := schema.ReservationRequest{
@@ -75,22 +60,6 @@ func CreateReservation(username string, password string, hostname string, user s
 	}
 
 	jsonReservationRequest, _ := json.Marshal(reservationRequest)
-	req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonReservationRequest))
-	req.Header.Add("x-auth-username", username)
-	req.Header.Add("x-auth-password", password)
-	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
-	client := &http.Client{}
-	resp, err := client.Do(req)
-	if err != nil {
-		log.Println("Error on response.\n[ERROR] -", err)
-	}
-	defer resp.Body.Close()
-
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		log.Println("Error while reading the response bytes:", err)
-	}
-
+	body := i.Request("POST", endpoint, bytes.NewBuffer(jsonReservationRequest))
 	fmt.Println(string(body))
-
 }
