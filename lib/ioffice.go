@@ -38,6 +38,10 @@ func (i *IOffice) Request(method string, endpoint string, body io.Reader) []byte
 	}
 	defer resp.Body.Close()
 
+	if resp.StatusCode < 200 || resp.StatusCode > 299 {
+		fmt.Println("Error status detected: ", resp.StatusCode)
+	}
+
 	respBody, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		log.Println("Error while reading the response bytes:", err)
