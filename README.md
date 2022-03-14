@@ -2,6 +2,9 @@
 
 Lists and creates reservations of spaces
 
+![screenshot.png](screenshot.png)
+
+
 ## Usage
 
 1. `cp ioffice.example.yaml ioffice.yaml`
