@@ -8,12 +8,23 @@ Lists and creates reservations of spaces
 ## Usage
 
 1. `cp ioffice.example.yaml ioffice.yaml`
-2. Set your username and password from the iOffice app
+2. Set up your authentication (see Auth section next)
 3. Set your instance's hostname (`example` in https://example.ioffice.com)
 4. Run the application to get a list of your future bookings (`go run .` or `./ioffice`)
 5. Book a named room by passing in a date and a room (`go run . 2022-03-13 2101` or `./ioffice 2022-03-13 2102`)
 6. From your list of reservations, take the room ID of the desk you prefer and put it into ioffice.yaml
 7. Now you can also reserve this desk for a full day without passing in the number (`go run . 2022-03-13` or `./ioffice 2022-03-13`)
+
+### Auth
+
+IOffice API currently can only handle simple auth.  However the frontend can actually use an SSO provider.
+If you have a non-SSO account then change `username` and `password` to your username and password.
+Otherwise you will need to manually login via the UI to your SSO provider and pass the authentication.
+Once this has been done, inspect your cookies for `ACTID` - set this as your `session`.  This will
+allow this application to work even with SSO providing the session is active.
+
+*Note* We prioritize `session` over `username` and `password`.  So if you have a non-SSO account and want to avoid 
+`session` then ensure it is set to blank `""` value.
 
 ## Development
 

@@ -6,22 +6,29 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"net/http/cookiejar"
 )
 
 type IOffice struct {
 	hostname   string
 	username   string
 	password   string
+	session    string
 	httpClient *http.Client
 	lastStatus int
 }
 
-func NewIOffice(hostname string, username string, password string) *IOffice {
+func NewIOffice(hostname string, username string, password string, session string) *IOffice {
+	jar, _ := cookiejar.New(nil)
 	return &IOffice{
 		hostname:   hostname,
 		username:   username,
 		password:   password,
+		session:    session,
 		lastStatus: 0,
+		httpClient: &http.Client{
+			Jar: jar,
+		},
 	}
 }
 
@@ -35,10 +42,16 @@ func (i *IOffice) Request(method string, endpoint string, body io.Reader) []byte
 	if method == "POST" {
 		req.Header.Set("Content-Type", "application/json; charset=UTF-8")
 	}
-	req.Header.Add("x-auth-username", i.username)
-	req.Header.Add("x-auth-password", i.password)
-	client := &http.Client{}
-	resp, err := client.Do(req)
+	if i.session == "" {
+		req.Header.Add("x-auth-username", i.username)
+		req.Header.Add("x-auth-password", i.password)
+	} else {
+		req.AddCookie(&http.Cookie{
+			Name:  "ACTID",
+			Value: i.session,
+		})
+	}
+	resp, err := i.httpClient.Do(req)
 	if err != nil {
 		log.Println("Error on response.\n[ERROR] -", err)
 	}

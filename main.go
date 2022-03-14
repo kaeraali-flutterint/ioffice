@@ -27,8 +27,9 @@ func main() {
 	password := viper.GetString("password")
 	roomID := viper.GetInt("roomID")
 	hostname := viper.GetString("hostname")
+	session := viper.GetString("session")
 
-	ioffice := lib.NewIOffice(hostname, username, password)
+	ioffice := lib.NewIOffice(hostname, username, password, session)
 
 	me := ioffice.GetMe()
 	if !ioffice.WasOkay() {
