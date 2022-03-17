@@ -1,6 +1,8 @@
 # iOffice CLI Reservation Tool
 
-Lists and creates reservations of spaces
+Lists and creates reservations of spaces (desks/rooms) in iOffice
+
+_This tool is not created by, affiliate with, or supported by iOffice_
 
 ![screenshot.png](screenshot.png)
 
@@ -17,7 +19,9 @@ Lists and creates reservations of spaces
 
 ### Auth
 
-IOffice API currently can only handle simple auth.  However the frontend can actually use an SSO provider.
+If you do not use SSO then you just need to add your username and password to ioffice.yaml, otherwise read on.
+
+IOffice API currently can only handle simple auth.  However, the frontend can actually use an SSO provider.
 If you have a non-SSO account then change `username` and `password` to your username and password.
 Otherwise you will need to manually login via the UI to your SSO provider and pass the authentication.
 Once this has been done, inspect your cookies for `ACTID` - set this as your `session`.  This will
@@ -27,6 +31,8 @@ allow this application to work even with SSO providing the session is active.
 `session` then ensure it is set to blank `""` value.
 
 ## Development
+
+iOffice publish [API documentation](https://ioffice.github.io/api/) that helps figure out new functionality. It's inaccurate or plain wrong in places, but you can use dev tools in your browser to watch what API calls the web app makes. If you feel like fixing the documentation, you can [raise a PR](https://github.com/iOffice/ioffice.github.io) against it.
 
 To release a new version:
 
