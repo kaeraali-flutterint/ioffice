@@ -31,6 +31,18 @@ func (i *IOffice) ListReservations() {
 	tbl.Print()
 }
 
+func (i *IOffice) CheckIn(reservationID string) {
+	endpoint := "v2/reservations/" + reservationID + "/checkIn"
+	body := i.Request("PUT", endpoint, bytes.NewBuffer([]byte("")))
+	fmt.Println(string(body))
+}
+
+func (i *IOffice) CancelReservation(reservationID string) {
+	endpoint := "v2/reservations/" + reservationID + "/cancel"
+	body := i.Request("PUT", endpoint, bytes.NewBuffer([]byte("")))
+	fmt.Println(string(body))
+}
+
 func (i *IOffice) CreateReservation(user schema.User, roomID int, date time.Time) {
 	endpoint := "v2/reservations"
 
