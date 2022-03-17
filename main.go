@@ -10,6 +10,10 @@ import (
 	"github.com/spf13/viper"
 )
 
+func usage() {
+	fmt.Printf("Please use one of the following commands:\n\nlist\ncreate <yyyy-mm-dd> [roomID]\ncheckin <reservation ID>\ndelete <reservation ID>")
+}
+
 func main() {
 	viper.SetConfigName("ioffice")
 	viper.SetConfigType("yaml")
@@ -37,14 +41,32 @@ func main() {
 		return
 	}
 
-	if len(os.Args) == 2 {
-		ioffice.CreateReservation(me, roomID, dateparse.MustParse(os.Args[1]))
-	}
+	if len(os.Args) < 2 {
+		usage()
+	} else {
 
-	if len(os.Args) == 3 {
-		room := ioffice.GetRoom(os.Args[2])
-		ioffice.CreateReservation(me, room.ID, dateparse.MustParse(os.Args[1]))
+		switch os.Args[1] {
+		case "list":
+			ioffice.ListReservations()
+		case "create":
+			if len(os.Args) == 2 {
+				usage()
+			}
+			if len(os.Args) == 3 {
+				ioffice.CreateReservation(me, roomID, dateparse.MustParse(os.Args[2]))
+			}
+			if len(os.Args) == 4 {
+				room := ioffice.GetRoom(os.Args[2])
+				ioffice.CreateReservation(me, room.ID, dateparse.MustParse(os.Args[2]))
+			}
+		case "checkin":
+			reservationID := os.Args[2]
+			ioffice.CheckIn(reservationID)
+		case "cancel":
+			reservationID := os.Args[2]
+			ioffice.CancelReservation(reservationID)
+		default:
+			usage()
+		}
 	}
-
-	ioffice.ListReservations()
 }
