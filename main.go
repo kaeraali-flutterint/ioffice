@@ -11,7 +11,7 @@ import (
 )
 
 func usage() {
-	fmt.Printf("Please use one of the following commands:\n\nlist\ncreate <yyyy-mm-dd> [room name]\ncheckin <reservation ID>\ncancel <reservation ID>")
+	fmt.Printf("Please use one of the following commands:\n\n%v list\n%v create <yyyy-mm-dd> [room name]\n%v checkin <reservation ID>\n%v cancel <reservation ID>", os.Args[0], os.Args[0], os.Args[0], os.Args[0])
 }
 
 func main() {
@@ -68,7 +68,7 @@ func main() {
 			reservationID := os.Args[2]
 			ioffice.CancelReservation(reservationID)
 			ioffice.ListReservations()
-		case "default":
+		default:
 			usage()
 		}
 	}
