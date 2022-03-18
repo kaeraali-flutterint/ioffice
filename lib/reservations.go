@@ -13,10 +13,7 @@ import (
 )
 
 func (i *IOffice) ListReservations() {
-	endpoint := "v2/reservations/?showOnlyMyReservations=true"
-	body := i.Request("GET", endpoint, nil)
-	reservations := schema.Reservations{}
-	json.Unmarshal([]byte(body), &reservations)
+	reservations := i.GetReservations()
 	log.Printf("Upcoming reservations: %v", len(reservations))
 
 	headerFmt := color.New(color.FgGreen, color.Underline).SprintfFunc()
@@ -29,6 +26,14 @@ func (i *IOffice) ListReservations() {
 		tbl.AddRow(reservation.ID, unixTimeUTC.Format(time.RFC822), reservation.Room.Name, reservation.Room.ID, reservation.CheckedIn)
 	}
 	tbl.Print()
+}
+
+func (i *IOffice) GetReservations() schema.Reservations {
+	endpoint := "v2/reservations/?showOnlyMyReservations=true"
+	body := i.Request("GET", endpoint, nil)
+	reservations := schema.Reservations{}
+	json.Unmarshal([]byte(body), &reservations)
+	return reservations
 }
 
 func (i *IOffice) CheckIn(reservationID string) {
