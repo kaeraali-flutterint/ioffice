@@ -31,6 +31,15 @@ allow this application to work even with SSO providing the session is active.
 *Note* We prioritize `session` over `username` and `password`.  So if you have a non-SSO account and want to avoid 
 `session` then ensure it is set to blank `""` value.
 
+### Duplicate Room Names
+
+You might have the same room names in multiple offices. If this is the case then you can set the building that you work in.
+
+1. Run `go run . buildings` or `./ioffice buildings` to get a list of building IDs and names
+2. Set `buildingID` in the yaml file to the ID of the building you work in
+
+All reservations will now use only this building
+
 ## Development
 
 iOffice publish [API documentation](https://ioffice.github.io/api/) that helps figure out new functionality. It's inaccurate or plain wrong in places, but you can use dev tools in your browser to watch what API calls the web app makes. If you feel like fixing the documentation, you can [raise a PR](https://github.com/iOffice/ioffice.github.io) against it.

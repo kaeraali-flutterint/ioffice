@@ -2,19 +2,28 @@ package main
 
 import (
 	"fmt"
+	"github.com/alicekaerast/ioffice/lib"
+	"github.com/alicekaerast/ioffice/schema"
+	"github.com/araddon/dateparse"
+	"github.com/fatih/color"
+	"github.com/rodaine/table"
+	"github.com/spf13/viper"
 	"log"
 	"os"
-
-	"github.com/alicekaerast/ioffice/lib"
-	"github.com/araddon/dateparse"
-	"github.com/spf13/viper"
 )
 
 func usage() {
-	fmt.Printf("Please use one of the following commands:\n\n%v list\n%v create <yyyy-mm-dd> [room name]\n%v checkin <reservation ID>\n%v cancel <reservation ID>", os.Args[0], os.Args[0], os.Args[0], os.Args[0])
+	fmt.Printf(`Please use one of the following commands:
+
+%v list
+%v create <yyyy-mm-dd> [room name]
+%v checkin <reservation ID>
+%v cancel <reservation ID>
+%v buildings`, os.Args[0], os.Args[0], os.Args[0], os.Args[0], os.Args[0])
 }
 
 func main() {
+	viper.SetDefault("buildingID", 0)
 	viper.SetConfigName("ioffice")
 	viper.SetConfigType("yaml")
 	viper.AddConfigPath("$HOME")
@@ -29,6 +38,7 @@ func main() {
 
 	username := viper.GetString("username")
 	password := viper.GetString("password")
+	buildingID := viper.GetInt("buildingID")
 	roomID := viper.GetInt("roomID")
 	hostname := viper.GetString("hostname")
 	session := viper.GetString("session")
@@ -56,7 +66,12 @@ func main() {
 				ioffice.CreateReservation(me, roomID, dateparse.MustParse(os.Args[2]))
 			}
 			if len(os.Args) == 4 {
-				room := ioffice.GetRoom(os.Args[3])
+				room := schema.Room{}
+				if buildingID == 0 {
+					room = ioffice.GetRoom(os.Args[3])
+				} else {
+					room = ioffice.GetRoomWithBuilding(os.Args[3], buildingID)
+				}
 				ioffice.CreateReservation(me, room.ID, dateparse.MustParse(os.Args[2]))
 			}
 			ioffice.ListReservations()
@@ -68,6 +83,18 @@ func main() {
 			reservationID := os.Args[2]
 			ioffice.CancelReservation(reservationID)
 			ioffice.ListReservations()
+		case "buildings":
+			buildings := ioffice.Buildings()
+
+			headerFmt := color.New(color.FgGreen, color.Underline).SprintfFunc()
+			columnFmt := color.New(color.FgYellow).SprintfFunc()
+			tbl := table.New("ID", "Name")
+			tbl.WithHeaderFormatter(headerFmt).WithFirstColumnFormatter(columnFmt)
+
+			for _, building := range buildings {
+				tbl.AddRow(building.ID, building.Name)
+			}
+			tbl.Print()
 		default:
 			usage()
 		}
