@@ -56,7 +56,7 @@ func main() {
 				ioffice.CreateReservation(me, roomID, dateparse.MustParse(os.Args[2]))
 			}
 			if len(os.Args) == 4 {
-				room := ioffice.GetRoom(os.Args[2])
+				room := ioffice.GetRoom(os.Args[3])
 				ioffice.CreateReservation(me, room.ID, dateparse.MustParse(os.Args[2]))
 			}
 		case "checkin":
