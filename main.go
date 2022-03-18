@@ -59,12 +59,16 @@ func main() {
 				room := ioffice.GetRoom(os.Args[3])
 				ioffice.CreateReservation(me, room.ID, dateparse.MustParse(os.Args[2]))
 			}
+			ioffice.ListReservations()
 		case "checkin":
 			reservationID := os.Args[2]
 			ioffice.CheckIn(reservationID)
+			ioffice.ListReservations()
 		case "cancel":
 			reservationID := os.Args[2]
 			ioffice.CancelReservation(reservationID)
+			ioffice.ListReservations()
+		case "default":
 			usage()
 		}
 	}
