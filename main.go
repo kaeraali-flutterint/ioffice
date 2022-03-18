@@ -11,7 +11,7 @@ import (
 )
 
 func usage() {
-	fmt.Printf("Please use one of the following commands:\n\nlist\ncreate <yyyy-mm-dd> [room name]\ncheckin <reservation ID>\ndelete <reservation ID>")
+	fmt.Printf("Please use one of the following commands:\n\nlist\ncreate <yyyy-mm-dd> [room name]\ncheckin <reservation ID>\ncancel <reservation ID>")
 }
 
 func main() {
