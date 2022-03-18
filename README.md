@@ -46,6 +46,8 @@ All reservations will now use only this building
 
 iOffice publish [API documentation](https://ioffice.github.io/api/) that helps figure out new functionality. It's inaccurate or plain wrong in places, but you can use dev tools in your browser to watch what API calls the web app makes. If you feel like fixing the documentation, you can [raise a PR](https://github.com/iOffice/ioffice.github.io) against it.
 
+To build and install locally: `make install` (assuming you have Go already installed). You may need to do this if your Mac blocks unsigned applications from running.
+
 To release a new version:
 
 1. Get your code into the main branch (via a PR if you're not a collaborator, ideally conventional commit messages)
