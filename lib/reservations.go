@@ -72,7 +72,6 @@ func (i *IOffice) CreateReservation(user schema.User, roomID int, date time.Time
 	}
 
 	jsonReservationRequest, _ := json.Marshal(reservationRequest)
-	fmt.Println(jsonReservationRequest)
 	body := i.Request("POST", endpoint, bytes.NewBuffer(jsonReservationRequest))
 	fmt.Println(string(body))
 }
