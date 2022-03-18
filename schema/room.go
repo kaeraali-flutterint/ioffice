@@ -25,7 +25,7 @@ type Room struct {
 	GoogleData  struct {
 		GoogleCalResourceID string `json:"googleCalResourceId"`
 		GoogleCalAddress    string `json:"googleCalAddress"`
-	} `json:"googleData"`
+	} `json:"googleData,omitempty"`
 	ReservableByRules bool   `json:"reservableByRules"`
 	Name              string `json:"name"`
 	RemoteInfo        string `json:"remoteInfo"`

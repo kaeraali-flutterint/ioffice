@@ -13,7 +13,7 @@ _This tool is not created by, affiliate with, or supported by iOffice_
 2. Set up your authentication (see Auth section next)
 3. Set your instance's hostname (`example` in https://example.ioffice.com)
 4. Run the application to get a list of your future bookings (`go run .` or `./ioffice`)
-5. Book a named room by passing in a date and a room (`go run . create 2022-03-13 2101` or `./ioffice create 2022-03-13 2102`)
+5. Book a named room by passing in a date and a room name (`go run . create 2022-03-13 2101` or `./ioffice create 2022-03-13 2102`)
 6. From your list of reservations, take the room ID of the desk you prefer and put it into ioffice.yaml
 7. Now you can also reserve this desk for a full day without passing in the number (`go run . create 2022-03-13` or `./ioffice create 2022-03-13`)
 8. You can then cancel or check in to your reservation by passing its ID (`go run . cancel 68610` or `./ioffice checkin 68610`)
