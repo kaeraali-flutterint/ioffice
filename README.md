@@ -18,7 +18,7 @@ This section assumes you have downloaded the application from the latest [releas
 5. Book a named room by passing in a date and a room name (`ioffice create 2022-03-13 2101`)
 6. From your list of reservations, take the room ID of the desk you prefer and put it into ioffice.yaml
 7. Now you can also reserve this desk for a full day without passing in the number (`ioffice . create 2022-03-13`)
-8. You can then cancel or check in to your reservation by passing its ID (`ioffice checkin 68610`)
+8. You can then cancel or check in to your reservation by passing its ID (`ioffice checkin 68610` or `ioffice cancel 68610`)
 
 ### Auth
 
