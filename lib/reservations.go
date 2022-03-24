@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"log"
 	"time"
 
 	"github.com/alicekaerast/ioffice/schema"
@@ -14,7 +13,7 @@ import (
 
 func (i *IOffice) ListReservations() {
 	reservations := i.GetReservations()
-	log.Printf("Upcoming reservations: %v", len(reservations))
+	fmt.Printf("Upcoming reservations: %v\n", len(reservations))
 
 	headerFmt := color.New(color.FgGreen, color.Underline).SprintfFunc()
 	columnFmt := color.New(color.FgYellow).SprintfFunc()
@@ -39,7 +38,13 @@ func (i *IOffice) GetReservations() schema.Reservations {
 func (i *IOffice) CheckIn(reservationID string) {
 	endpoint := "v2/reservations/" + reservationID + "/checkIn"
 	body := i.Request("PUT", endpoint, bytes.NewBuffer([]byte("")))
-	fmt.Println(string(body))
+	checkinResponse := schema.CheckinResponse{}
+	json.Unmarshal(body, &checkinResponse)
+	if checkinResponse.Error != "" {
+		fmt.Println(checkinResponse.ErrorDescription)
+	} else {
+		fmt.Printf("Checked In: %v\n", checkinResponse.CheckedIn)
+	}
 }
 
 func (i *IOffice) CancelReservation(reservationID string) {
