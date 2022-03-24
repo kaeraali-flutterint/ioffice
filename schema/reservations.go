@@ -37,3 +37,29 @@ type ReservationRequest struct {
 	EndDate        int64 `json:"endDate"`
 	AllDay         bool  `json:"allDay"`
 }
+
+type CheckinResponse struct {
+	CheckedOut         bool   `json:"checkedOut"`
+	CheckedInDate      int64  `json:"checkedInDate"`
+	Notes              string `json:"notes"`
+	CancellationReason string `json:"cancellationReason"`
+	CheckedIn          bool   `json:"checkedIn"`
+	EndDate            int64  `json:"endDate"`
+	Center             struct {
+		Name string `json:"name"`
+		ID   int    `json:"id"`
+	} `json:"center"`
+	Room             Room   `json:"room"`
+	DateUpdated      int64  `json:"dateUpdated"`
+	DateCreated      int64  `json:"dateCreated"`
+	Name             string `json:"name"`
+	Cancelled        bool   `json:"cancelled"`
+	ID               int    `json:"id"`
+	User             User   `json:"user"`
+	NumberOfPeople   int    `json:"numberOfPeople"`
+	StartDate        int64  `json:"startDate"`
+	Status           int    `json:"status"`
+	Error            string `json:"error"`
+	ErrorDescription string `json:"errorDescription"`
+	Localized        bool   `json:"localized"`
+}
