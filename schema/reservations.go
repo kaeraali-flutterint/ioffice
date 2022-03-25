@@ -38,6 +38,55 @@ type ReservationRequest struct {
 	AllDay         bool  `json:"allDay"`
 }
 
+type ReservationResponse struct {
+	CheckedOut         bool   `json:"checkedOut"`
+	Notes              string `json:"notes"`
+	CancellationReason string `json:"cancellationReason"`
+	CheckedIn          bool   `json:"checkedIn"`
+	EndDate            int64  `json:"endDate"`
+	Center             struct {
+		Name string `json:"name"`
+		ID   int    `json:"id"`
+	} `json:"center"`
+	Room             Room   `json:"room"`
+	DateCreated      int64  `json:"dateCreated"`
+	Name             string `json:"name"`
+	Cancelled        bool   `json:"cancelled"`
+	ID               int    `json:"id"`
+	User             User   `json:"user"`
+	NumberOfPeople   int    `json:"numberOfPeople"`
+	StartDate        int64  `json:"startDate"`
+	Status           int    `json:"status"`
+	Error            string `json:"error"`
+	ErrorDescription string `json:"errorDescription"`
+	Localized        bool   `json:"localized"`
+}
+
+type CancellationResponse struct {
+	CheckedOut         bool   `json:"checkedOut"`
+	Notes              string `json:"notes"`
+	CancellationReason string `json:"cancellationReason"`
+	CheckedIn          bool   `json:"checkedIn"`
+	EndDate            int64  `json:"endDate"`
+	Center             struct {
+		Name string `json:"name"`
+		ID   int    `json:"id"`
+	} `json:"center"`
+	Room             Room   `json:"room"`
+	DateUpdated      int64  `json:"dateUpdated"`
+	DateCreated      int64  `json:"dateCreated"`
+	Name             string `json:"name"`
+	Cancelled        bool   `json:"cancelled"`
+	ID               int    `json:"id"`
+	User             User   `json:"user"`
+	NumberOfPeople   int    `json:"numberOfPeople"`
+	StartDate        int64  `json:"startDate"`
+	Status           int    `json:"status"`
+	Error            string `json:"error"`
+	ErrorDescription string `json:"errorDescription"`
+	Localized        bool   `json:"localized"`
+}
+
 type CheckinResponse struct {
 	CheckedOut         bool   `json:"checkedOut"`
 	CheckedInDate      int64  `json:"checkedInDate"`
