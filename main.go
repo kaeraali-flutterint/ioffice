@@ -2,14 +2,16 @@ package main
 
 import (
 	"fmt"
+	"log"
+	"os"
+	"strconv"
+
 	"github.com/alicekaerast/ioffice/lib"
 	"github.com/alicekaerast/ioffice/schema"
 	"github.com/araddon/dateparse"
 	"github.com/fatih/color"
 	"github.com/rodaine/table"
 	"github.com/spf13/viper"
-	"log"
-	"os"
 )
 
 func usage() {
@@ -95,6 +97,15 @@ func main() {
 				tbl.AddRow(building.ID, building.Name)
 			}
 			tbl.Print()
+		case "occupancy":
+			fmt.Printf("Floor: %v\n", os.Args[2])
+
+			floorID, err := strconv.Atoi(os.Args[2])
+
+			fmt.Printf("floorID: %v\n", floorID)
+			fmt.Printf("err: %v\n", err)
+
+			ioffice.ShowOccupancy(floorID)
 		default:
 			usage()
 		}
