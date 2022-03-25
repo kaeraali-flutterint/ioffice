@@ -83,17 +83,20 @@ type Room struct {
 	Occupied bool `json:"occupied"`
 }
 
+type Reservation struct {
+	EndDate int64 `json:"endDate"`
+	ID      int   `json:"id"`
+	User    struct {
+		Name string `json:"name"`
+		ID   int    `json:"id"`
+	} `json:"user"`
+	NumberOfPeople int   `json:"numberOfPeople"`
+	StartDate      int64 `json:"startDate"`
+	Room           Room
+}
+
 type RoomReservations struct {
-	Name         string `json:"name"`
-	Reservations []struct {
-		EndDate int64 `json:"endDate"`
-		ID      int   `json:"id"`
-		User    struct {
-			Name string `json:"name"`
-			ID   int    `json:"id"`
-		} `json:"user"`
-		NumberOfPeople int   `json:"numberOfPeople"`
-		StartDate      int64 `json:"startDate"`
-	} `json:"anonymousReservations"`
-	ID int `json:"id"`
+	Name         string        `json:"name"`
+	Reservations []Reservation `json:"anonymousReservations"`
+	ID           int           `json:"id"`
 }

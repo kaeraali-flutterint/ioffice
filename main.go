@@ -98,13 +98,7 @@ func main() {
 			}
 			tbl.Print()
 		case "occupancy":
-			fmt.Printf("Floor: %v\n", os.Args[2])
-
-			floorID, err := strconv.Atoi(os.Args[2])
-
-			fmt.Printf("floorID: %v\n", floorID)
-			fmt.Printf("err: %v\n", err)
-
+			floorID, _ := strconv.Atoi(os.Args[2])
 			ioffice.ShowOccupancy(floorID)
 		default:
 			usage()
