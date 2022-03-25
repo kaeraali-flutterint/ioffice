@@ -10,6 +10,7 @@ import (
 	"github.com/spf13/viper"
 	"log"
 	"os"
+	"strconv"
 )
 
 func usage() {
@@ -95,6 +96,27 @@ func main() {
 				tbl.AddRow(building.ID, building.Name)
 			}
 			tbl.Print()
+		case "floors":
+			if len(os.Args) == 3 {
+				buildingID, _ = strconv.Atoi(os.Args[2])
+			}
+			floors := make([]schema.Floor, 0)
+			if buildingID == 0 {
+				floors = ioffice.Floors()
+			} else {
+				floors = ioffice.FloorsForBuilding(fmt.Sprint(buildingID))
+			}
+
+			headerFmt := color.New(color.FgGreen, color.Underline).SprintfFunc()
+			columnFmt := color.New(color.FgYellow).SprintfFunc()
+			tbl := table.New("ID", "Name")
+			tbl.WithHeaderFormatter(headerFmt).WithFirstColumnFormatter(columnFmt)
+
+			for _, floor := range floors {
+				tbl.AddRow(floor.ID, floor.Name)
+			}
+			tbl.Print()
+
 		default:
 			usage()
 		}
