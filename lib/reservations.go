@@ -50,7 +50,13 @@ func (i *IOffice) CheckIn(reservationID string) {
 func (i *IOffice) CancelReservation(reservationID string) {
 	endpoint := "v2/reservations/" + reservationID + "/cancel"
 	body := i.Request("PUT", endpoint, bytes.NewBuffer([]byte("")))
-	fmt.Println(string(body))
+	cancellationResponse := schema.CancellationResponse{}
+	json.Unmarshal(body, &cancellationResponse)
+	if cancellationResponse.Error != "" {
+		fmt.Println(cancellationResponse.ErrorDescription)
+	} else {
+		fmt.Printf("Booking for %v %v\n", cancellationResponse.Room.Name, cancellationResponse.CancellationReason)
+	}
 }
 
 func (i *IOffice) CreateReservation(user schema.User, roomID int, date time.Time) {
@@ -83,5 +89,12 @@ func (i *IOffice) CreateReservation(user schema.User, roomID int, date time.Time
 
 	jsonReservationRequest, _ := json.Marshal(reservationRequest)
 	body := i.Request("POST", endpoint, bytes.NewBuffer(jsonReservationRequest))
-	fmt.Println(string(body))
+	reservationResponse := schema.ReservationResponse{}
+	json.Unmarshal(body, &reservationResponse)
+
+	if reservationResponse.Error != "" {
+		fmt.Println(reservationResponse.ErrorDescription)
+	} else {
+		fmt.Printf("Reserved: %v for %v\n", reservationResponse.Room.Name, reservationResponse.User.Name)
+	}
 }
