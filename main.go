@@ -2,15 +2,16 @@ package main
 
 import (
 	"fmt"
+	"log"
+	"os"
+	"strconv"
+
 	"github.com/alicekaerast/ioffice/lib"
 	"github.com/alicekaerast/ioffice/schema"
 	"github.com/araddon/dateparse"
 	"github.com/fatih/color"
 	"github.com/rodaine/table"
 	"github.com/spf13/viper"
-	"log"
-	"os"
-	"strconv"
 )
 
 func usage() {
@@ -96,6 +97,9 @@ func main() {
 				tbl.AddRow(building.ID, building.Name)
 			}
 			tbl.Print()
+		case "occupancy":
+			floorID, _ := strconv.Atoi(os.Args[2])
+			ioffice.ShowOccupancy(floorID)
 		case "floors":
 			if len(os.Args) == 3 {
 				buildingID, _ = strconv.Atoi(os.Args[2])
