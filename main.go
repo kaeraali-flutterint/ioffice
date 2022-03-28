@@ -12,12 +12,6 @@ import (
 	"github.com/fatih/color"
 	"github.com/rodaine/table"
 	"github.com/spf13/viper"
-<<<<<<< HEAD
-=======
-	"log"
-	"os"
-	"strconv"
->>>>>>> 449e966081c7ad1c3a78662fb57a184c9171cafc
 )
 
 func usage() {
