@@ -1,5 +1,5 @@
 ioffice:
-	go mod tidy -compat=1.17
+	go mod tidy -compat=1.18
 	go build .
 
 .PHONY: clean
