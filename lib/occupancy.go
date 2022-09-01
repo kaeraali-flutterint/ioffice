@@ -23,7 +23,14 @@ func (i *IOffice) ShowOccupancy(floor int) {
 	}
 
 	sort.Slice(reservations, func(i, j int) bool {
-		return reservations[i].StartDate < reservations[j].StartDate
+		iStartdate := time.Unix(reservations[i].StartDate/1000, 0).Format("2006-01-02")
+		jStartdate := time.Unix(reservations[j].StartDate/1000, 0).Format("2006-01-02")
+
+		//return reservations[i].StartDate < reservations[j].StartDate
+		if iStartdate != jStartdate {
+			return iStartdate < jStartdate
+		}
+		return reservations[i].Room.Name < reservations[j].Room.Name
 	})
 
 	fmt.Printf("Occupancy: %v\n", len(occupancy))
