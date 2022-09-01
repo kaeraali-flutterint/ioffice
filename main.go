@@ -98,6 +98,11 @@ func main() {
 			}
 			tbl.Print()
 		case "occupancy":
+			if len(os.Args) != 3 {
+				fmt.Print("Must provide a floor ID for occupancy")
+				fmt.Print("Usage: ioffice occupancy <floor ID>")
+				os.Exit(1)
+			}
 			floorID, _ := strconv.Atoi(os.Args[2])
 			ioffice.ShowOccupancy(floorID)
 		case "floors":
