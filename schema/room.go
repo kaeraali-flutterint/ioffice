@@ -30,57 +30,8 @@ type Room struct {
 	Name              string `json:"name"`
 	RemoteInfo        string `json:"remoteInfo"`
 	ID                int    `json:"id"`
-	Floor             struct {
-		Area             float64 `json:"area"`
-		DateCreated      int64   `json:"dateCreated"`
-		DrawingAvailable bool    `json:"drawingAvailable"`
-		InteriorGross    float64 `json:"interiorGross"`
-		Name             string  `json:"name"`
-		LeaseArea        float64 `json:"leaseArea"`
-		ID               int     `json:"id"`
-		Building         struct {
-			Address struct {
-				Country struct {
-					DefaultSelected         bool   `json:"defaultSelected"`
-					SubdivisionCategoryName string `json:"subdivisionCategoryName"`
-					Alpha2Code              string `json:"alpha2Code"`
-					IsoCode                 string `json:"isoCode"`
-					Name                    string `json:"name"`
-					ID                      int    `json:"id"`
-				} `json:"country"`
-				City       string `json:"city"`
-				Street     string `json:"street"`
-				PostalCode string `json:"postalCode"`
-				State      struct {
-					Country struct {
-						DefaultSelected         bool   `json:"defaultSelected"`
-						SubdivisionCategoryName string `json:"subdivisionCategoryName"`
-						Alpha2Code              string `json:"alpha2Code"`
-						IsoCode                 string `json:"isoCode"`
-						Name                    string `json:"name"`
-						ID                      int    `json:"id"`
-					} `json:"country"`
-					DefaultSelected bool   `json:"defaultSelected"`
-					Code            string `json:"code"`
-					Name            string `json:"name"`
-					ID              int    `json:"id"`
-					CategoryName    string `json:"categoryName"`
-				} `json:"state"`
-			} `json:"address"`
-			Code        string `json:"code"`
-			DateCreated int64  `json:"dateCreated"`
-			Metric      bool   `json:"metric"`
-			Name        string `json:"name"`
-			Location    struct {
-			} `json:"location"`
-			RevitLink   string        `json:"revitLink"`
-			ID          int           `json:"id"`
-			DateUpdated int64         `json:"dateUpdated"`
-			CostCenters []interface{} `json:"costCenters"`
-		} `json:"building"`
-		DateUpdated int64 `json:"dateUpdated"`
-	} `json:"floor"`
-	Occupied bool `json:"occupied"`
+	Floor             Floor  `json:"floor"`
+	Occupied          bool   `json:"occupied"`
 }
 
 type Reservation struct {
