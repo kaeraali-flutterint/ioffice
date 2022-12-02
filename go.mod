@@ -5,7 +5,7 @@ go 1.18
 require (
 	github.com/araddon/dateparse v0.0.0-20210429162001-6b43995a97de
 	github.com/fatih/color v1.13.0
-	github.com/rodaine/table v1.0.1
+	github.com/rodaine/table v1.1.0
 	github.com/spf13/viper v1.14.0
 )
 
