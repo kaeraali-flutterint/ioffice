@@ -4,20 +4,26 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"path"
 	"strconv"
 
 	"github.com/alicekaerast/ioffice/lib"
 	"github.com/alicekaerast/ioffice/schema"
 	"github.com/araddon/dateparse"
 	"github.com/fatih/color"
+	"github.com/knadh/koanf"
+	"github.com/knadh/koanf/parsers/yaml"
+	"github.com/knadh/koanf/providers/confmap"
+	"github.com/knadh/koanf/providers/file"
 	"github.com/rodaine/table"
-	"github.com/spf13/viper"
 )
+
+var k = koanf.New(".")
 
 func main() {
 	configure()
-	buildingID := viper.GetInt("buildingID")
-	roomID := viper.GetInt("roomID")
+	buildingID := k.Int("buildingID")
+	roomID := k.Int("roomID")
 
 	ioffice, me := auth()
 
@@ -136,22 +142,20 @@ func usage() {
 }
 
 func configure() {
-	viper.SetDefault("buildingID", 0)
-	viper.SetConfigName("ioffice")
-	viper.SetConfigType("yaml")
-	viper.AddConfigPath("$HOME")
-	viper.AddConfigPath("$HOME/.config")
-	viper.AddConfigPath(".")
-	err := viper.ReadInConfig()
-	if err != nil { // Handle errors reading the config file
-		panic(fmt.Errorf("Fatal error config file: %w \n", err))
+	dirname, err := os.UserHomeDir()
+	if err != nil {
+		log.Fatal(err)
 	}
-	viper.SetEnvPrefix("ioffice")
-	viper.AutomaticEnv()
+
+	k.Load(confmap.Provider(map[string]interface{}{"buildingID": 0}, "."), nil)
+
+	k.Load(file.Provider(path.Join(dirname, "ioffice.yaml")), yaml.Parser())
+	k.Load(file.Provider(path.Join(dirname, ".config", "ioffice.yaml")), yaml.Parser())
+	k.Load(file.Provider("ioffice.yaml"), yaml.Parser())
 }
 
 func auth() (*lib.IOffice, schema.User) {
-	ioffice := lib.NewIOffice(viper.GetString("hostname"), viper.GetString("username"), viper.GetString("password"), viper.GetString("session"))
+	ioffice := lib.NewIOffice(k.String("hostname"), k.String("username"), k.String("password"), k.String("session"))
 	me := ioffice.GetMe()
 	if !ioffice.WasOkay() {
 		log.Fatalln("Stopping now as auth failed.  Are you on SSO?  See README.md on how to authenticate.")
