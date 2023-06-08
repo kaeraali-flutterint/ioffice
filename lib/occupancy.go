@@ -33,8 +33,7 @@ func (i *IOffice) ShowOccupancy(floor int) {
 		return reservations[i].Room.Name < reservations[j].Room.Name
 	})
 
-	fmt.Printf("Occupancy: %v\n", len(occupancy))
-
+	fmt.Printf("Occupancy for floor ID %v: %v\n", floor, len(occupancy))
 	headerFmt := color.New(color.FgGreen, color.Underline).SprintfFunc()
 	columnFmt := color.New(color.FgYellow).SprintfFunc()
 	tbl := table.New("Location", "Start", "Who")

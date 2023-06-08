@@ -43,20 +43,22 @@ func main() {
 				Usage: "create a reservation for a date provided as an argument",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
-						Name:  "location",
-						Value: "0",
-						Usage: "location to reserve",
+						Name:    "location",
+						Value:   "",
+						Usage:   "location to reserve",
+						Aliases: []string{"l"},
 					},
 					&cli.IntFlag{
-						Name:  "building",
-						Value: buildingID,
-						Usage: "building ID within which to search",
+						Name:    "building",
+						Value:   buildingID,
+						Usage:   "building ID within which to search",
+						Aliases: []string{"b"},
 					},
 				},
 				Action: func(cCtx *cli.Context) error {
-					if cCtx.Int("building") != 0 && cCtx.String("location") != "0" {
+					if cCtx.Int("building") != 0 && cCtx.String("location") != "" {
 						roomID = ioffice.GetRoomWithBuilding(cCtx.String("location"), cCtx.Int("building")).ID
-					} else if cCtx.String("location") != "0" {
+					} else if cCtx.String("location") != "" {
 						roomID = ioffice.GetRoom(cCtx.String("location")).ID
 					}
 
@@ -123,6 +125,7 @@ func main() {
 						Name:     "floor",
 						Usage:    "floor ID",
 						Required: true,
+						Aliases:  []string{"f"},
 					},
 				},
 				Action: func(cCtx *cli.Context) error {
