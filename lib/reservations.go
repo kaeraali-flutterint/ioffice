@@ -17,12 +17,12 @@ func (i *IOffice) ListReservations() {
 
 	headerFmt := color.New(color.FgGreen, color.Underline).SprintfFunc()
 	columnFmt := color.New(color.FgYellow).SprintfFunc()
-	tbl := table.New("ID", "Start", "Location Name", "Location ID", "Checked In?")
+	tbl := table.New("ID", "Start", "Location Name", "Location ID", "Floor", "Building", "Checked In?")
 	tbl.WithHeaderFormatter(headerFmt).WithFirstColumnFormatter(columnFmt)
 
 	for _, reservation := range reservations {
 		unixTimeUTC := time.Unix(reservation.StartDate/1000, 0)
-		tbl.AddRow(reservation.ID, unixTimeUTC.Format(time.RFC822), reservation.Room.Name, reservation.Room.ID, reservation.CheckedIn)
+		tbl.AddRow(reservation.ID, unixTimeUTC.Format(time.RFC822), reservation.Room.Name, reservation.Room.ID, reservation.Room.Floor.Name, reservation.Room.Floor.Building.Name, reservation.CheckedIn)
 	}
 	tbl.Print()
 }
