@@ -18,10 +18,11 @@ _This tool is not created by, affiliate with, or supported by iOffice_
 This section assumes you have downloaded the application from the latest [release](https://github.com/alicekaerast/ioffice/releases/latest) and have installed this to somewhere in $PATH. If you are running this from source code, replace `ioffice` with `go run .` in the below documentation.
 
 * Run the application to get a list of your future bookings (`ioffice`)
-* Book a named room by passing in a date and a room name (`ioffice create 2022-03-13 2101`)
+* Book a named room by passing in a date and a room name (`ioffice create -l 2101 2022-03-13`)
 * Cancel or check in to your reservation by passing its ID (`ioffice checkin 68610` or `ioffice cancel 68610`)
-* Get a floor ID to use for checking occupancy (`ioffice floors`)
-* See occupancy of a floor (`ioffice occupancy 2`)
+* See available buildings (`ioffice buildings`)
+* Get a floor ID to use for checking occupancy (`ioffice floors -b 46`)
+* See occupancy of a floor (`ioffice occupancy -f 2`)
 
 ### Auth
 
@@ -43,7 +44,7 @@ You might have the same room names in multiple offices. If this is the case then
 1. Run `ioffice buildings` to get a list of building IDs and names
 2. Set `buildingID` in the yaml file to the ID of the building you work in
 
-All reservations will now use only this building
+All reservations will now use only this building. You can override the building when making reservations with `ioffice create -b 46 -l 3035 2023-10-31`, where 46 is a building ID and 3035 is the name of a location
 
 ## Development
 
