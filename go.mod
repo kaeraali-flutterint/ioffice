@@ -7,7 +7,7 @@ require (
 	github.com/fatih/color v1.16.0
 	github.com/knadh/koanf v1.5.0
 	github.com/rodaine/table v1.1.0
-	github.com/urfave/cli/v2 v2.26.0
+	github.com/urfave/cli/v2 v2.27.0
 	golang.org/x/exp v0.0.0-20230522175609-2e198f4a06a1
 )
 
