@@ -6,7 +6,7 @@ require (
 	github.com/araddon/dateparse v0.0.0-20210429162001-6b43995a97de
 	github.com/fatih/color v1.16.0
 	github.com/knadh/koanf v1.5.0
-	github.com/rodaine/table v1.1.1
+	github.com/rodaine/table v1.2.0
 	github.com/urfave/cli/v2 v2.27.1
 	golang.org/x/exp v0.0.0-20230522175609-2e198f4a06a1
 )
