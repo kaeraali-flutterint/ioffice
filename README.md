@@ -1,5 +1,7 @@
 # iOffice CLI Reservation Tool
 
+> This tool is no longer maintained as @alicekaerast no longer uses the iOffice system. The tool was still working as of last commit, but there is clear scope for improvement which might be easier with a clean implementation
+
 Lists and creates reservations of spaces (desks/rooms) in iOffice
 
 _This tool is not created by, affiliate with, or supported by iOffice_
